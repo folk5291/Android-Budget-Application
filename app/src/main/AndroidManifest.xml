@@ -19,7 +19,8 @@
         <activity android:name=".CurrentBudgetActivity" />
         <activity android:name=".PreviousBudgetActivity" />
         <activity android:name=".InsertDataActivity" />
-        <activity android:name=".PreviousBudgetDataActivity"></activity>
+        <activity android:name=".PreviousBudgetDataActivity" />
+        <activity android:name=".Chart"></activity>
     </application>
 
 </manifest>

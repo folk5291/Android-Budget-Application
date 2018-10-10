@@ -3,13 +3,15 @@
     <string name="Current_Budget">Current Budget</string>
     <string name="Previous_Budget">Previous Budget</string>
     <string name="Insert_Data">Insert Data</string>
-    <string name ="Previous_Budget_Date">Previous Budget Data</string>
+    <string name="Previous_Budget_Date">Previous Budget Data</string>
     <string name="Edit_Budget">Edit Budget</string>
     <string name="Exit">Exit</string>
     <string name="Cost">Cost</string>
     <string name="Date">Date</string>
     <string name="Expense_Type">Expense Type</string>
     <string name="Select_Expense_Type">Select expense type...</string>
+    <string name="pieChart">Pie Chart</string>
+    <string name="Save">Save</string>
     <string name="January">January</string>
 
     <string-array name="expenses">

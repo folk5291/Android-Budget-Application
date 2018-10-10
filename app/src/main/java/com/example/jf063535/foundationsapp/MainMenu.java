@@ -30,6 +30,14 @@ public class MainMenu extends AppCompatActivity {
                 openPreviousBudgetActivity();
             }
         });
+
+        button = (Button) findViewById(R.id.button7);
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                openChart();
+            }
+        });
     }
 
         private void openCurrentBudgetActivity() {
@@ -41,4 +49,9 @@ public class MainMenu extends AppCompatActivity {
             Intent intent1 = new Intent(this, PreviousBudgetActivity.class);
             startActivity(intent1);
         }
+
+         private void openChart() {
+             Intent intent2 = new Intent(this, Chart.class);
+             startActivity(intent2);
+         }
     }
