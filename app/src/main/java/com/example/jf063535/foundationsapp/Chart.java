@@ -7,7 +7,14 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.content.Intent;
 import android.widget.ListView;
+import android.app.Activity;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.text.TextUtils;
+import android.widget.Toast;
+
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -22,56 +29,104 @@ import java.util.Arrays;
 
 public class Chart extends AppCompatActivity {
 
-    PieChart pieChart;
     EditText costInput;
     EditText expenseType;
-    float cost;
-    String label;
     Button Save;
+    Button Insert;
+    Float cost;
+    String label;
+    Boolean CheckEditTextEmpty ;
+    String SQLiteQuery;
+    SQLiteDatabase SQLITEDATABASE;
     ArrayList<PieEntry> yValues = new ArrayList<>();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chart);
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_chart);
 
-        pieChart = (PieChart) findViewById(R.id.pieChart);
+            costInput = (EditText)findViewById(R.id.costInput);
 
-        pieChart.setUsePercentValues(true);
-        pieChart.getDescription().setEnabled(false);
-        pieChart.setExtraOffsets(5, 10, 5, 5);
+            expenseType = (EditText)findViewById(R.id.expenseType);
 
-        pieChart.setDragDecelerationFrictionCoef(0.95f);
+            Save = (Button)findViewById(R.id.save);
 
-        pieChart.setDrawHoleEnabled(true);
-        pieChart.setHoleColor(Color.WHITE);
-        pieChart.setTransparentCircleRadius(61f);
+            Insert = (Button)findViewById(R.id.Insert);
 
-        yValues.add(new PieEntry(31f, "hi"));
+            Save.setOnClickListener(new View.OnClickListener() {
 
-        pieChart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
-        Description description = new Description();
-        description.setText("Your monthly budget");
-        description.setTextSize(14);
-        pieChart.setDescription(description);
+                @Override
+                public void onClick(View v) {// TODO Auto-generated method stub
 
-        PieDataSet dataSet = new PieDataSet(yValues, "Countries");
-        dataSet.setSliceSpace(3f);
-        dataSet.setSelectionShift(5f);
-        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+                    DBCreate();
 
-        dataSet.setSliceSpace(3f);
-        dataSet.setSelectionShift(5f);
-        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+                    SubmitData2SQLiteDB();
+                }
+            });
 
-        PieData data = new PieData((dataSet));
-        data.setValueTextSize(10f);
-        data.setValueTextColor(Color.BLACK);
+            Insert.setOnClickListener(new View.OnClickListener() {
 
-        pieChart.setData(data);
-    }
+                @Override
+                public void onClick(View v) {
+                    // TODO Auto-generated method stub
 
-    public void AddValues(){
-        yValues.add(new PieEntry(Float.valueOf(costInput.getText().toString()), expenseType));
-    }
+                    Intent intent = new Intent(Chart.this, GetDataActivity.class);
+                    startActivity(intent);
+
+                }
+            });
+        }
+
+        public void DBCreate(){
+
+            SQLITEDATABASE = openOrCreateDatabase("DemoDataBase", Context.MODE_PRIVATE, null);
+
+            SQLITEDATABASE.execSQL("CREATE TABLE IF NOT EXISTS demoTable(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, cost VARCHAR, label VARCHAR);");
+
+        }
+
+        public void SubmitData2SQLiteDB(){
+
+            cost = Float.valueOf(costInput.getText().toString());
+
+            label = expenseType.getText().toString();
+
+            CheckEditTextIsEmptyOrNot( cost.toString(), label);
+
+            if(CheckEditTextEmpty == true)
+            {
+
+                SQLiteQuery = "INSERT INTO demoTable (cost, label) VALUES('"+cost+"', '"+label+"');";
+
+                SQLITEDATABASE.execSQL(SQLiteQuery);
+
+                Toast.makeText(Chart.this,"Data Submit Successfully", Toast.LENGTH_LONG).show();
+
+                ClearEditTextAfterDoneTask();
+
+            }
+            else {
+
+                Toast.makeText(Chart.this,"Please Fill All the Fields", Toast.LENGTH_LONG).show();
+            }
+
+        }
+
+        public void CheckEditTextIsEmptyOrNot(String cost, String label){
+
+            if(TextUtils.isEmpty(cost) || TextUtils.isEmpty(label))
+            {
+                CheckEditTextEmpty = false ;
+            }
+            else
+            {
+                CheckEditTextEmpty = true ;
+            }
+
+        }
+
+        public void ClearEditTextAfterDoneTask(){
+            costInput.getText().clear();
+            expenseType.getText().clear();
+        }
 }

@@ -20,6 +20,7 @@
         <activity android:name=".PreviousBudgetActivity" />
         <activity android:name=".InsertDataActivity" />
         <activity android:name=".PreviousBudgetDataActivity" />
+        <activity android:name=".GetDataActivity" />
         <activity android:name=".Chart"></activity>
     </application>
 

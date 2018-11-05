@@ -12,6 +12,8 @@
     <string name="Select_Expense_Type">Select expense type...</string>
     <string name="pieChart">Pie Chart</string>
     <string name="Save">Save</string>
+    <string name="Insert">Insert</string>
+    <string name="Add">Add</string>
     <string name="January">January</string>
 
     <string-array name="expenses">
