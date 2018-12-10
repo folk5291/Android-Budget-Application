@@ -15,14 +15,6 @@ public class MainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openCurrentBudgetActivity();
-            }
-        });
-
         button = (Button) findViewById(R.id.button2);
         button.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -39,11 +31,6 @@ public class MainMenu extends AppCompatActivity {
             }
         });
     }
-
-        private void openCurrentBudgetActivity() {
-            Intent intent = new Intent(this, CurrentBudgetActivity.class);
-            startActivity(intent);
-        }
 
         private void openPreviousBudgetActivity() {
             Intent intent1 = new Intent(this, PreviousBudgetActivity.class);
